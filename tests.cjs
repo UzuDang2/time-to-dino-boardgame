@@ -131,10 +131,10 @@ test('batch roasting flips foods with one card each and one fuel; obsolete tea r
   let g=supplies(fresh(),['branch','fish','meat','mushroom']);const ids=g.players[0].bag.filter(i=>['fish','meat','mushroom'].includes(i.kind)).map(i=>i.id);assert.throws(()=>apply(g,'beginPayment',{type:'cook',data:{card:0,items:ids}}),/식재료/);g.players[0].boards.find(b=>b.id==='kitchen').complete=true;const beforeBatch=E.clone(g);assert.throws(()=>E.act(g,'cook',{card:0,items:ids}),/한 개마다/);assert.deepEqual(g,beforeBatch);g=paid(g,'cook',{cards:[0,1,2],items:ids});assert.equal(E.count(g.players[0],'branch'),0);assert.equal(g.actions,1);assert.equal(g.players[0].hand.length,beforeBatch.players[0].hand.length-3);assert.deepEqual(ids.map(id=>g.players[0].bag.find(i=>i.id===id).kind),['cookedFish','cookedMeat','cookedMushroom']);assert.deepEqual(g.loot,[]);
   const tea=supplies(fresh(),['branch','herb']),before=E.clone(tea);assert.throws(()=>E.act(tea,'beginPayment',{type:'cook',data:{card:0,tea:true}}),/조리 목록/);assert.deepEqual(tea,before);
 });
-test('manual processing rejects hunger, healing consumes offered herb, craft requires facility',()=>{
+test('manual processing rejects hunger, healing consumes offered herb, equipment combines without facility',()=>{
   let g=supplies(fresh(),['branch','branch']);g.players[0].hand[0]='hunger';assert.throws(()=>apply(g,'beginPayment',{type:'process',data:{cards:[0],recipes:[{material:'wood',shape:'I'}]}}),/허기/);assert.equal(E.count(g.players[0],'branch'),2);
   let h=supplies(fresh(),['herb','herb']);h.players[0].hp=5;const herbs=h.players[0].bag.filter(i=>i.kind==='herb');h=apply(h,'beginPayment',{type:'heal',data:{card:0}});h=apply(h,'offerPayment',{id:herbs[1].id});h=apply(h,'commitPayment');assert.equal(h.players[0].hp,8);assert.ok(h.players[0].bag.some(i=>i.id===herbs[0].id));assert.ok(!h.players[0].bag.some(i=>i.id===herbs[1].id));assert.equal(h.actions,1);
-  let c=supplies(fresh(),['branch','stone','stem']);assert.throws(()=>apply(c,'beginPayment',{type:'craft',data:{card:0}}),/공방/);c.players[0].boards.find(b=>b.id==='workshop').complete=true;c=paid(c,'craft',{card:0});assert.equal(c.loot[0].kind,'spear');assert.equal(c.loot[0].durability,6);assert.equal(E.count(c.players[0],'spear'),0);
+  let c=supplies(fresh(),['branch','stone','stem']);assert.equal(c.players[0].boards.find(b=>b.id==='workshop').complete,false);c=paid(c,'craft',{card:0});assert.equal(c.loot[0].kind,'spear');assert.equal(c.loot[0].durability,6);assert.equal(E.count(c.players[0],'spear'),0);
 });
 test('supply quest never auto-consumes resources; manual hand-in is free and exact once',()=>{
   let g=supplies(fresh(),['branch','stone','stem']);g.players[0].quests=[{id:'manualq',name:'채집 메모',type:'supply',done:false}];g.players[0].discard.push('quest:manualq');const bag=E.clone(g.players[0].bag);g=apply(g,'end');assert.deepEqual(g.players[0].bag,bag);assert.equal(g.players[0].quests[0].done,false);assert.equal(g.players[0].vp,0);g.actions=0;const handBefore=g.players[0].hand.filter(c=>c!=='quest:manualq');g=paid(g,'submitQuest',{quest:'manualq'});assert.equal(g.actions,0);assert.equal(g.players[0].vp,2);assert.equal(g.players[0].quests[0].done,true);assert.ok(g.players[0].discard.includes('harvest'));assert.deepEqual(g.players[0].hand,handBefore);assert.ok(![...g.players[0].hand,...g.players[0].deck,...g.players[0].discard].includes('quest:manualq'));assert.throws(()=>apply(g,'beginPayment',{type:'submitQuest',data:{quest:'manualq'}}),/퀘스트/);
@@ -577,4 +577,25 @@ test('combat presentation records exact damage before rescue or reward state cha
 });
 test('combat enemy animation uses damage actually taken and the pre-rescue zero HP',()=>{
  let g=roundFixture(2,1);g.players[0].hp=1;g.battle.pattern=['A','B','C'];g.players[0].combatHand=['punch','crouch','crouch','punch'];g=apply(g,'battlePlan',{cards:[0,1,2]});g=apply(g,'battleStep');assert.equal(g.battleEffect.playerDamage,1);assert.equal(g.battleEffect.playerAfter,0);assert.equal(g.battleEffect.reaction.type,'attack');assert.equal(g.players[0].hp,8);assert.equal(g.players[0].pos,'0,0');assert.equal(g.turn,1);assert.equal(g.combatTurnEnd,null);
+});
+
+test('field equipment combination needs no workshop, pays once, and preserves cancellation and saved payment',()=>{
+  let g=supplies(fixture(),['branch','stone','stem']);g.players[0].pos='1,0';
+  assert.equal(g.players[0].boards.find(b=>b.id==='workshop').complete,false);
+  const original=E.clone(g);g=apply(g,'beginPayment',{type:'craft',data:{card:0}});
+  g=apply(g,'offerPayment',{id:g.players[0].bag[0].id});g=E.migrateSave(JSON.parse(JSON.stringify(g)));
+  assert.equal(g.payment.type,'craft');assert.equal(g.actions,2);assert.equal(g.players[0].hand.length,4);
+  g=apply(g,'cancelPayment');assert.deepEqual(g.players[0].bag,original.players[0].bag);assert.deepEqual(g.players[0].hand,original.players[0].hand);
+  g=paid(g,'craft',{card:0});assert.equal(g.actions,1);assert.equal(g.players[0].hand.length,3);assert.equal(g.players[0].pos,'1,0');assert.equal(g.players[0].hunger,6);assert.equal(g.players[0].detection,0);assert.equal(g.players[0].bag.length,0);
+  assert.equal(g.loot[0].kind,'spear');assert.equal(g.loot[0].origin,'1,0');assert.equal(g.loot[0].durability,6);placeAll(g);
+  supplies(g,['branch','stone','stem']);const before=E.clone(g);assert.throws(()=>E.act(g,'beginPayment',{type:'craft',data:{card:0}}),/이미 돌창/);assert.deepEqual(g,before);
+  for(const change of [s=>s.actions=0,s=>s.players[0].hand=[],s=>s.players[0].bag=s.players[0].bag.filter(i=>i.kind!=='stem')]){
+    const s=supplies(fixture(),['branch','stone','stem']);s.players[0].pos='1,0';change(s);const before=E.clone(s);assert.throws(()=>E.act(s,'beginPayment',{type:'craft',data:{card:0}}));assert.deepEqual(s,before);
+  }
+  const material=supplies(fixture(),['branch','branch','branch']);material.players[0].pos='1,0';assert.throws(()=>apply(material,'beginPayment',{type:'process',data:{cards:[0],recipes:[{material:'wood',shape:'V3'}]}}),/베이스캠프/);
+});
+
+test('old workshop wording updates while built cells, claimed rewards, score and completion remain unchanged',()=>{
+  const g=fresh(),b=g.players[0].boards.find(b=>b.id==='workshop');b.desc='돌창 제작 해금 · 공격 +1';b.cells[1]={id:'workshop-old',material:'wood',shape:'D',x:1,y:0};b.bonuses[0].claimed=true;b.complete=true;g.players[0].vp=9;
+  const updated=E.migrateSave(g),actual=updated.players[0].boards.find(b=>b.id==='workshop');assert.deepEqual(actual,{...b,desc:E.BUILDINGS.find(b=>b.id==='workshop').desc});assert.equal(updated.players[0].vp,9);assert.deepEqual(E.migrateSave(updated),updated);assert.equal(b.desc,'돌창 제작 해금 · 공격 +1');
 });
