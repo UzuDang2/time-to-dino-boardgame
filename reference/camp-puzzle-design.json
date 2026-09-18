@@ -1,0 +1,1161 @@
+{
+  "schemaVersion": 2,
+  "gameVersion": "0.7",
+  "status": "solver-verified-design",
+  "notes": [
+    "Coordinates are zero-based; mask is row-major.",
+    "rotation is 0..3 using the existing engine quarter-turn transform; flip reflects X before rotation.",
+    "The unified backpack workshop uses per-zone material totals, charged by individual covered cells. A piece may span both zones.",
+    "Both backpack levels can be tiled independently. Level 2 may be filled first; activation waits for level 1.",
+    "Base solutions do not depend on any bonus. All four buildings plus unspent piece bonuses fit the shared stock of three per material+shape.",
+    "D is reward-only. Piece reward falls back to one berry when its bank is empty."
+  ],
+  "shapes": {
+    "I": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        3,
+        0
+      ]
+    ],
+    "S": [
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "I3": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ]
+    ],
+    "V3": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "T": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "L": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "U5": [
+      [
+        0,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        1
+      ]
+    ],
+    "O": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "D": [
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  "materialShapes": {
+    "wood": [
+      "I",
+      "S",
+      "I3",
+      "V3",
+      "T",
+      "L",
+      "U5"
+    ],
+    "stone": [
+      "O"
+    ],
+    "fiber": [
+      "T",
+      "S"
+    ]
+  },
+  "woodBranchCost": {
+    "I": 5,
+    "S": 4,
+    "I3": 4,
+    "V3": 3,
+    "T": 4,
+    "L": 4,
+    "U5": 3
+  },
+  "sharedStockPerMaterialShape": 3,
+  "rewardOnly": {
+    "wood": [
+      "D"
+    ]
+  },
+  "buildings": [
+    {
+      "id": "pack1",
+      "name": "배낭 작업대",
+      "w": 10,
+      "h": 2,
+      "needs": {
+        "wood": 12,
+        "fiber": 4
+      },
+      "vp": 3,
+      "desc": "1레벨: 위쪽 +3칸 · 2레벨: 양옆 +6칸 (최대 21칸)",
+      "effect": "pack",
+      "mask": [
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        false,
+        true,
+        true,
+        true,
+        true,
+        false,
+        false,
+        true,
+        true,
+        true,
+        true
+      ],
+      "zones": [
+        {
+          "id": "pack-level-1",
+          "level": 1,
+          "name": "1레벨",
+          "indices": [
+            1,
+            2,
+            3,
+            4,
+            10,
+            11,
+            12,
+            13
+          ],
+          "needs": {
+            "wood": 8
+          },
+          "unlock": [
+            "top"
+          ],
+          "vp": 1,
+          "active": false
+        },
+        {
+          "id": "pack-level-2",
+          "level": 2,
+          "name": "2레벨",
+          "indices": [
+            5,
+            6,
+            7,
+            8,
+            16,
+            17,
+            18,
+            19
+          ],
+          "needs": {
+            "wood": 4,
+            "fiber": 4
+          },
+          "unlock": [
+            "left",
+            "right"
+          ],
+          "vp": 2,
+          "active": false
+        }
+      ],
+      "bonuses": [
+        {
+          "id": "pack1-berries",
+          "x": 4,
+          "y": 0,
+          "type": "berries",
+          "kind": "berry",
+          "amount": 2,
+          "claimed": false
+        },
+        {
+          "id": "pack2-berries",
+          "x": 8,
+          "y": 0,
+          "type": "berries",
+          "kind": "berry",
+          "amount": 2,
+          "claimed": false
+        }
+      ],
+      "maskRows": [
+        ".########.",
+        "####..####"
+      ],
+      "solution": [
+        {
+          "material": "wood",
+          "shape": "I",
+          "rotation": 0,
+          "flip": false,
+          "x": 0,
+          "y": 1,
+          "cells": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              1
+            ]
+          ]
+        },
+        {
+          "material": "wood",
+          "shape": "I",
+          "rotation": 0,
+          "flip": false,
+          "x": 1,
+          "y": 0,
+          "cells": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              3,
+              0
+            ],
+            [
+              4,
+              0
+            ]
+          ]
+        },
+        {
+          "material": "wood",
+          "shape": "T",
+          "rotation": 0,
+          "flip": false,
+          "x": 5,
+          "y": 0,
+          "cells": [
+            [
+              5,
+              0
+            ],
+            [
+              6,
+              0
+            ],
+            [
+              7,
+              0
+            ],
+            [
+              6,
+              1
+            ]
+          ]
+        },
+        {
+          "material": "fiber",
+          "shape": "T",
+          "rotation": 2,
+          "flip": false,
+          "x": 7,
+          "y": 0,
+          "cells": [
+            [
+              8,
+              0
+            ],
+            [
+              7,
+              1
+            ],
+            [
+              8,
+              1
+            ],
+            [
+              9,
+              1
+            ]
+          ]
+        }
+      ],
+      "solutionRows": [
+        ".BBBBCCCD.",
+        "AAAA..CDDD"
+      ],
+      "zoneProofs": {
+        "levels": [
+          {
+            "zone": "pack-level-1",
+            "level": 1,
+            "independent": true,
+            "solution": [
+              {
+                "material": "wood",
+                "shape": "I",
+                "rotation": 0,
+                "flip": false,
+                "x": 1,
+                "y": 0,
+                "cells": [
+                  [
+                    1,
+                    0
+                  ],
+                  [
+                    2,
+                    0
+                  ],
+                  [
+                    3,
+                    0
+                  ],
+                  [
+                    4,
+                    0
+                  ]
+                ]
+              },
+              {
+                "material": "wood",
+                "shape": "I",
+                "rotation": 0,
+                "flip": false,
+                "x": 0,
+                "y": 1,
+                "cells": [
+                  [
+                    0,
+                    1
+                  ],
+                  [
+                    1,
+                    1
+                  ],
+                  [
+                    2,
+                    1
+                  ],
+                  [
+                    3,
+                    1
+                  ]
+                ]
+              }
+            ],
+            "solutionRows": [
+              ".AAAA.....",
+              "BBBB......"
+            ],
+            "stockUsed": {
+              "wood:I": 2
+            }
+          },
+          {
+            "zone": "pack-level-2",
+            "level": 2,
+            "independent": true,
+            "solution": [
+              {
+                "material": "wood",
+                "shape": "T",
+                "rotation": 0,
+                "flip": false,
+                "x": 5,
+                "y": 0,
+                "cells": [
+                  [
+                    5,
+                    0
+                  ],
+                  [
+                    6,
+                    0
+                  ],
+                  [
+                    7,
+                    0
+                  ],
+                  [
+                    6,
+                    1
+                  ]
+                ]
+              },
+              {
+                "material": "fiber",
+                "shape": "T",
+                "rotation": 2,
+                "flip": false,
+                "x": 7,
+                "y": 0,
+                "cells": [
+                  [
+                    8,
+                    0
+                  ],
+                  [
+                    7,
+                    1
+                  ],
+                  [
+                    8,
+                    1
+                  ],
+                  [
+                    9,
+                    1
+                  ]
+                ]
+              }
+            ],
+            "solutionRows": [
+              ".....AAAB.",
+              "......ABBB"
+            ],
+            "stockUsed": {
+              "wood:T": 1,
+              "fiber:T": 1
+            }
+          }
+        ],
+        "crossingBoundary": {
+          "solution": [
+            {
+              "material": "wood",
+              "shape": "V3",
+              "rotation": 3,
+              "flip": false,
+              "x": 0,
+              "y": 0,
+              "cells": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  1
+                ]
+              ]
+            },
+            {
+              "material": "wood",
+              "shape": "V3",
+              "rotation": 0,
+              "flip": false,
+              "x": 2,
+              "y": 0,
+              "cells": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  3,
+                  1
+                ]
+              ]
+            },
+            {
+              "material": "wood",
+              "shape": "I3",
+              "rotation": 0,
+              "flip": false,
+              "x": 3,
+              "y": 0,
+              "cells": [
+                [
+                  3,
+                  0
+                ],
+                [
+                  4,
+                  0
+                ],
+                [
+                  5,
+                  0
+                ]
+              ]
+            },
+            {
+              "material": "fiber",
+              "shape": "S",
+              "rotation": 0,
+              "flip": true,
+              "x": 7,
+              "y": 0,
+              "cells": [
+                [
+                  7,
+                  0
+                ],
+                [
+                  8,
+                  0
+                ],
+                [
+                  8,
+                  1
+                ],
+                [
+                  9,
+                  1
+                ]
+              ]
+            },
+            {
+              "material": "wood",
+              "shape": "V3",
+              "rotation": 0,
+              "flip": false,
+              "x": 6,
+              "y": 0,
+              "cells": [
+                [
+                  6,
+                  0
+                ],
+                [
+                  6,
+                  1
+                ],
+                [
+                  7,
+                  1
+                ]
+              ]
+            }
+          ],
+          "solutionRows": [
+            ".ABCCCEDD.",
+            "AABB..EEDD"
+          ],
+          "stockUsed": {
+            "wood:V3": 3,
+            "wood:I3": 1,
+            "fiber:S": 1
+          },
+          "regionQuotasVerified": true,
+          "note": "This alternative uses all three wood V3 pieces; a later V3 bonus uses its berry fallback unless a V3 is returned."
+        }
+      },
+      "validation": {
+        "usableCells": 16,
+        "connected": true,
+        "exactCover": true,
+        "searchNodes": 5,
+        "candidateCount": 87,
+        "stockUsed": {
+          "wood:I": 2,
+          "wood:T": 1,
+          "fiber:T": 1
+        }
+      }
+    },
+    {
+      "id": "kitchen",
+      "name": "야외 주방",
+      "w": 4,
+      "h": 4,
+      "needs": {
+        "wood": 8,
+        "stone": 4
+      },
+      "vp": 2,
+      "desc": "조리 한 번에 최대 3개",
+      "effect": "kitchen",
+      "mask": [
+        false,
+        true,
+        true,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        false,
+        true,
+        true,
+        false
+      ],
+      "bonuses": [
+        {
+          "id": "kitchen-berries",
+          "x": 2,
+          "y": 0,
+          "type": "berries",
+          "kind": "berry",
+          "amount": 2,
+          "claimed": false
+        },
+        {
+          "id": "kitchen-piece",
+          "x": 1,
+          "y": 3,
+          "type": "piece",
+          "material": "wood",
+          "shape": "D",
+          "claimed": false
+        }
+      ],
+      "maskRows": [
+        ".##.",
+        "####",
+        "####",
+        ".##."
+      ],
+      "solution": [
+        {
+          "material": "wood",
+          "shape": "S",
+          "rotation": 0,
+          "flip": false,
+          "x": 0,
+          "y": 0,
+          "cells": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        },
+        {
+          "material": "wood",
+          "shape": "S",
+          "rotation": 0,
+          "flip": true,
+          "x": 0,
+          "y": 2,
+          "cells": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              3
+            ]
+          ]
+        },
+        {
+          "material": "stone",
+          "shape": "O",
+          "rotation": 0,
+          "flip": false,
+          "x": 2,
+          "y": 1,
+          "cells": [
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              3,
+              2
+            ]
+          ]
+        }
+      ],
+      "solutionRows": [
+        ".AA.",
+        "AACC",
+        "BBCC",
+        ".BB."
+      ],
+      "validation": {
+        "usableCells": 12,
+        "connected": true,
+        "exactCover": true,
+        "searchNodes": 4,
+        "candidateCount": 105,
+        "stockUsed": {
+          "wood:S": 2,
+          "stone:O": 1
+        }
+      }
+    },
+    {
+      "id": "workshop",
+      "name": "장비 공방",
+      "w": 5,
+      "h": 4,
+      "needs": {
+        "wood": 8,
+        "fiber": 8
+      },
+      "vp": 2,
+      "desc": "돌창 제작 해금 · 공격 +1",
+      "effect": "workshop",
+      "mask": [
+        false,
+        true,
+        true,
+        true,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        false,
+        true,
+        true,
+        false,
+        true,
+        true,
+        true,
+        true
+      ],
+      "bonuses": [
+        {
+          "id": "workshop-piece",
+          "x": 4,
+          "y": 1,
+          "type": "piece",
+          "material": "wood",
+          "shape": "V3",
+          "claimed": false
+        },
+        {
+          "id": "workshop-berries",
+          "x": 1,
+          "y": 3,
+          "type": "berries",
+          "kind": "berry",
+          "amount": 2,
+          "claimed": false
+        }
+      ],
+      "maskRows": [
+        ".###.",
+        "#####",
+        "##.##",
+        ".####"
+      ],
+      "solution": [
+        {
+          "material": "fiber",
+          "shape": "S",
+          "rotation": 0,
+          "flip": true,
+          "x": 0,
+          "y": 2,
+          "cells": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              3
+            ]
+          ]
+        },
+        {
+          "material": "fiber",
+          "shape": "S",
+          "rotation": 0,
+          "flip": false,
+          "x": 0,
+          "y": 0,
+          "cells": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        },
+        {
+          "material": "wood",
+          "shape": "T",
+          "rotation": 1,
+          "flip": false,
+          "x": 2,
+          "y": 0,
+          "cells": [
+            [
+              3,
+              0
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              3,
+              2
+            ]
+          ]
+        },
+        {
+          "material": "wood",
+          "shape": "L",
+          "rotation": 0,
+          "flip": true,
+          "x": 3,
+          "y": 1,
+          "cells": [
+            [
+              4,
+              1
+            ],
+            [
+              4,
+              2
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              4,
+              3
+            ]
+          ]
+        }
+      ],
+      "solutionRows": [
+        ".BBC.",
+        "BBCCD",
+        "AA.CD",
+        ".AADD"
+      ],
+      "validation": {
+        "usableCells": 16,
+        "connected": true,
+        "exactCover": true,
+        "searchNodes": 22,
+        "candidateCount": 135,
+        "stockUsed": {
+          "fiber:S": 2,
+          "wood:T": 1,
+          "wood:L": 1
+        }
+      }
+    },
+    {
+      "id": "warehouse",
+      "name": "자재 창고",
+      "w": 3,
+      "h": 3,
+      "needs": {
+        "wood": 8
+      },
+      "vp": 1,
+      "desc": "추가 4×4 자재 보관소",
+      "effect": "warehouse",
+      "mask": [
+        true,
+        true,
+        true,
+        true,
+        false,
+        true,
+        true,
+        true,
+        true
+      ],
+      "bonuses": [
+        {
+          "id": "warehouse-piece",
+          "x": 1,
+          "y": 0,
+          "type": "piece",
+          "material": "wood",
+          "shape": "D",
+          "claimed": false
+        }
+      ],
+      "maskRows": [
+        "###",
+        "#.#",
+        "###"
+      ],
+      "solution": [
+        {
+          "material": "wood",
+          "shape": "I3",
+          "rotation": 0,
+          "flip": false,
+          "x": 0,
+          "y": 0,
+          "cells": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ]
+          ]
+        },
+        {
+          "material": "wood",
+          "shape": "U5",
+          "rotation": 0,
+          "flip": false,
+          "x": 0,
+          "y": 1,
+          "cells": [
+            [
+              0,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ]
+          ]
+        }
+      ],
+      "solutionRows": [
+        "AAA",
+        "B.B",
+        "BBB"
+      ],
+      "validation": {
+        "usableCells": 8,
+        "connected": true,
+        "exactCover": true,
+        "searchNodes": 3,
+        "candidateCount": 20,
+        "stockUsed": {
+          "wood:I3": 1,
+          "wood:U5": 1
+        }
+      }
+    }
+  ],
+  "validation": {
+    "buildingCount": 4,
+    "usableCellsTotal": 52,
+    "globalBaseStockUsed": {
+      "wood:I": 2,
+      "wood:T": 2,
+      "fiber:T": 1,
+      "wood:S": 2,
+      "stone:O": 1,
+      "fiber:S": 2,
+      "wood:L": 1,
+      "wood:I3": 1,
+      "wood:U5": 1
+    },
+    "unspentBonusStockReserved": {
+      "wood:D": 2,
+      "wood:V3": 1
+    },
+    "allBuildingsSimultaneouslyWithinSharedStock": true
+  }
+}

@@ -1,0 +1,16 @@
+.resource-flight{position:fixed;z-index:1100;pointer-events:none;display:flex;align-items:center;justify-content:center;border-radius:10px;background:#fff4d4;border:1px solid #bb9966;box-shadow:0 5px 12px #3e563b38;will-change:transform,opacity}
+.resource-flight>svg{width:100%;height:100%;overflow:visible}
+.resource-motion-panel{overflow:hidden!important;pointer-events:none!important;contain:layout paint}
+.resource-motion-panel .resource-arrived{opacity:1!important;background:#e5edc8!important;border:1px solid #a0b278!important;box-shadow:inset 0 1px 0 #fff9dd}
+.resource-motion-panel .resource-arrived svg{opacity:1!important;filter:none!important}
+.motion-target-pending{visibility:hidden!important}
+.motion-landed-piece{position:absolute;pointer-events:none}
+.motion-landed-piece>svg{width:100%;height:100%}
+.resource-motion-active #app{cursor:progress}
+.receipt-step{font-size:10px;color:#6c815b;background:#e7edcf;border:1px solid #c4d2a5;border-radius:7px;padding:4px 8px;white-space:nowrap}
+
+
+.supply-controls{justify-content:space-between;gap:12px;flex-wrap:wrap}.supply-controls .btn{flex-shrink:0;margin-left:auto}
+
+.resource-flight{z-index:1200}.resource-motion-panel{z-index:1100}
+.motion-option{display:flex;align-items:center;gap:12px;margin:14px 0;padding:12px;background:#eef0dc;border-radius:10px}.motion-option small{display:block;color:#6c815b}

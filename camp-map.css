@@ -1,0 +1,113 @@
+.camp-in-map{position:absolute;inset:0;z-index:12;background:#f3efdcf5;backdrop-filter:blur(5px);padding:15px 20px;overflow:hidden}
+.camp-board{height:100%;display:flex;flex-direction:column;min-height:0}
+.camp-in-map .modal-header{flex:none;align-items:center;margin:0 0 12px;padding:0 0 10px;border-bottom:1px solid #d0d7b8}
+.camp-in-map .modal-header h2{font-size:23px;line-height:1.2;margin:3px 0;color:#476b53}
+.camp-in-map .modal-header p{font-size:11px;margin:4px 0 0;line-height:1.4}
+.camp-in-map .eyebrow{font-size:8px;margin:0}
+.camp-in-map .camp-layout{display:grid;grid-template-columns:270px minmax(0,1fr);gap:18px;flex:1;min-height:0;overflow:hidden}
+.camp-in-map .camp-tools{padding:13px;background:#e9ecd7;border:1px solid #ced7b4;border-radius:12px;min-height:0;overflow-y:auto;scrollbar-width:thin}
+.camp-in-map .camp-tools h3{font-size:16px;margin:0 0 7px;display:flex;gap:6px;align-items:center}
+.camp-in-map .camp-hand-hint{display:flex;align-items:center;gap:8px;padding:8px;background:#faf6df;border-radius:7px;margin:8px 0 10px;font-size:10px;line-height:1.7;color:#657852}
+.camp-in-map .recipe-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+.camp-in-map .recipe{padding:7px;font-size:10px;min-width:0;justify-content:flex-start;gap:8px}
+.camp-in-map .recipe.chosen{background:#d5e3ba;border-color:#7f9b63;box-shadow:0 0 0 1px #7f9b63}
+.camp-in-map .mini-shape{transform:scale(.82);transform-origin:center}
+.camp-in-map .camp-tip{font-size:10px;line-height:1.6;margin:10px 0}
+.camp-in-map .camp-tools .tiny{font-size:10px}
+.camp-in-map .camp-tools>.btn{padding:9px;font-size:12px}
+.camp-in-map .boards{display:grid;grid-template-columns:repeat(3,minmax(165px,1fr));align-content:start;gap:12px;min-width:0;min-height:0;overflow:auto;scrollbar-width:thin;padding:0 5px 10px 0}
+.camp-in-map .blueprint{padding:11px;border-radius:10px;min-width:0}
+.camp-in-map .blueprint h4{font-size:13px;margin:0 0 5px}
+.camp-in-map .blueprint p{font-size:10px;line-height:1.5}
+.camp-in-map .requirements{font-size:9px;gap:5px;flex-wrap:wrap;margin:5px 0}
+.camp-in-map .grid-board{margin:8px auto;max-width:180px;gap:2px}
+.camp-in-map .grid-cell{min-width:0;min-height:0;aspect-ratio:1}
+.camp-selection-badge{position:absolute;top:-8px;right:5px;border-radius:12px;padding:3px 8px;background:#456f4f;color:#fff4d2;font-size:9px;box-shadow:0 2px 4px #46644720;z-index:3}
+.hand-zone:has(.camp-selection-badge) .action-card.selected{border-color:#62894e;background:#eaf0cf;box-shadow:0 0 0 2px #89a76a,0 5px 0 #819267}
+.camp-in-map~.map-help{display:none}
+@media(max-width:1250px){.camp-in-map .boards{grid-template-columns:repeat(2,minmax(150px,1fr))}.camp-in-map .camp-layout{grid-template-columns:245px minmax(0,1fr)}.camp-in-map{padding:12px}}
+@media(max-width:760px){.camp-in-map{padding:10px}.camp-in-map .modal-header h2{font-size:18px}.camp-in-map .modal-header p{display:none}.camp-in-map .modal-header .row{gap:4px}.camp-in-map .modal-header .btn{font-size:9px;padding:6px}.camp-in-map .camp-layout{grid-template-columns:minmax(190px,.9fr) minmax(145px,1fr);gap:6px;overflow-x:auto}.camp-in-map .camp-tools{padding:8px}.camp-in-map .boards{grid-template-columns:1fr;padding-right:0;gap:6px}.camp-in-map .blueprint{padding:8px}.camp-in-map .camp-tools h3{font-size:13px}.camp-in-map .camp-hand-hint{font-size:9px}}
+
+/* Keep the confirm action visible while browsing recipes. */
+.camp-in-map .camp-tools{display:flex;flex-direction:column;gap:0}
+.camp-production{display:flex;flex-direction:column;flex:1;min-height:0}
+.camp-production.has-piece{display:none}
+.camp-recipe-list{min-height:0;flex:1;overflow-y:auto;scrollbar-width:thin;padding:0 2px 5px}
+.camp-in-map .camp-hand-hint{display:block;font-size:10px;margin:3px 0 6px;padding:5px 6px;line-height:1.5}
+.camp-recipe-list>.tiny:first-child{margin-top:0}
+.camp-process-footer{flex:none;border-top:1px solid #cbd4b3;margin-top:5px;padding-top:6px;background:#e9ecd7}
+.camp-process-footer .btn{margin-top:5px;padding:8px;font-size:12px}
+.camp-tools:has(.camp-production:not(.has-piece))>.camp-tip{display:none}
+.camp-in-map .piece-preview{height:75px;flex:none;margin:6px 0}
+.camp-in-map .pending-banner{font-size:11px;padding:8px;line-height:1.6;margin-bottom:8px}
+@media(max-height:850px) and (min-width:761px){.camp-in-map{padding:10px 14px}.camp-in-map .modal-header{margin-bottom:8px;padding-bottom:7px}.camp-in-map .modal-header p,.camp-in-map .eyebrow{display:none}.camp-in-map .modal-header h2{font-size:19px}.camp-in-map .camp-tools{padding:9px}.camp-in-map .camp-tools h3{font-size:14px}}
+.camp-in-map .camp-layout{grid-template-rows:minmax(0,1fr)}
+.camp-in-map .camp-tools{max-height:100%;overflow:hidden}
+.camp-in-map .camp-tools:has(.has-piece){overflow-y:auto}
+.camp-production>h3,.camp-production>.camp-hand-hint{flex:none}
+/* Variable-size blocks, shared supply and building reward squares. */
+.camp-in-map .camp-piece-slots{display:flex;gap:4px;flex:none;margin:0 0 5px}
+.camp-piece-slots button{display:flex;align-items:center;justify-content:space-between;gap:5px;flex:1;min-width:0;padding:5px 7px;border:1px solid #bdcaa6;border-radius:6px;background:#f4f1dc;font-size:10px}
+.camp-piece-slots button.on{background:#d7e3bd;border-color:#6c8c57;font-weight:700}
+.camp-piece-slots small{font-size:8px;color:#79855e}
+.camp-material-tabs{display:flex;gap:3px;flex:none;margin-bottom:5px}
+.camp-material-tabs button{flex:1;background:transparent;border-bottom:2px solid #cad2b6;padding:4px 2px;font-size:10px;color:#81906a}
+.camp-material-tabs button.on{color:#436846;border-color:#5c8155;font-weight:700}
+.camp-in-map .recipe-options{gap:5px}
+.camp-in-map .recipe{display:grid;grid-template-columns:36px minmax(0,1fr);grid-template-rows:29px 16px;gap:3px 6px;padding:6px;text-align:left;border-radius:8px;min-height:60px}
+.camp-in-map .recipe .mini-shape{grid-row:1;grid-column:1;transform:none;display:grid;grid-template-columns:repeat(4,7px);grid-template-rows:repeat(3,7px);gap:1px;width:31px;height:23px;align-self:center}
+.camp-in-map .recipe .mini-shape i{width:7px;height:7px;border-radius:1.5px;box-shadow:inset 0 0 0 1px #82694426}
+.block-info{display:flex;flex-direction:column;gap:2px;min-width:0}
+.block-info strong{font-size:9px;line-height:1.2;white-space:normal}
+.block-info small{font-size:8px;color:#87916b}
+.block-price{font-size:10px;white-space:nowrap;grid-column:1}
+.block-stock{font-size:8px;border-radius:5px;background:#ecead6;padding:2px 5px;justify-self:end;align-self:center}
+.recipe.chosen .block-stock{background:#809d69;color:#fff9df}
+.recipe.sold-out{opacity:.46;filter:saturate(.35)}
+.camp-stock-note{font-size:9px;color:#7f896b;line-height:1.7;margin-top:7px;padding:6px 0}
+.camp-cost-summary{font-size:10px;line-height:1.5;display:flex;flex-wrap:wrap;gap:3px 8px}
+.camp-cost-summary .short{color:#ab6652}
+.camp-cost-summary .short b{font-weight:650}
+.camp-in-map .grid-board.shaped-board{background:transparent;border:0;box-shadow:none;padding:0;gap:3px}
+.puzzle-hole{aspect-ratio:1;min-width:0;pointer-events:none}
+.camp-in-map .shaped-board .grid-cell{border:1.5px solid #b0bc93;box-shadow:0 2px 0 #afbb9140;background:#faf6e4;position:relative;overflow:hidden}
+.camp-in-map .shaped-board .grid-cell.filled{box-shadow:inset 0 0 0 2px #ffffff25,0 2px 0 #82936c3b}
+.camp-in-map .grid-cell.bonus-cell:not(.filled){background:#f1dfaa;border-color:#c3a265}
+.grid-cell.bonus-cell .icon,.grid-cell.bonus-cell>svg{max-width:66%;max-height:68%;pointer-events:none}
+.grid-cell.bonus-cell small{position:absolute;right:1px;bottom:0;font-size:7px;font-weight:700;color:#876d3d}
+.reward-check{position:absolute;bottom:0;right:1px;font-size:9px;color:#fff8dc;text-shadow:0 1px 2px #426046}
+.building-fill{font-size:9px;color:#869070;text-align:center;margin-top:5px}
+.blueprint-bonuses{display:flex;flex-wrap:wrap;gap:4px;font-size:8px;line-height:1.4;border-top:1px dashed #cbd3b6;padding-top:6px}
+.blueprint-bonuses>span{display:flex;align-items:center;gap:3px;background:#f4eacc;padding:3px 5px;border-radius:5px}
+.blueprint-bonuses .claimed{opacity:.5;background:#e3e8d4}
+.camp-in-map .pending-banner{flex:none}
+.camp-in-map .camp-tools>.section-label{flex:none;margin:4px 0;font-size:11px}
+.camp-placement-actions{position:sticky;bottom:0;flex:none;background:#e9ecd7;padding-block:5px;z-index:1}
+.camp-in-map .piece-preview{height:60px;gap:8px;padding:5px;flex:none}
+.camp-in-map .piece-preview svg{width:64px;height:50px;max-width:64px}
+.camp-in-map .piece-preview span{font-size:11px}
+.camp-in-map .camp-tip{flex:none;font-size:9px;line-height:1.6;margin:5px 0}
+@media(max-width:760px){.camp-in-map .recipe{grid-template-columns:28px minmax(0,1fr);padding:4px;gap:2px;min-height:57px}.camp-in-map .recipe .mini-shape{transform:scale(.82);transform-origin:left center}.block-info strong{font-size:8px}.camp-piece-slots button{font-size:9px;padding:4px}.camp-in-map .camp-hand-hint{font-size:8px}.camp-material-tabs button{font-size:9px}.block-price{font-size:9px}}
+@media(max-height:850px) and (min-width:761px){.camp-production>h3,.camp-production>.camp-hand-hint{display:none!important}.camp-in-map .recipe{min-height:56px;grid-template-rows:26px 15px;padding:5px}.camp-in-map .camp-piece-slots{margin-bottom:3px}}
+
+/* One connected backpack workshop with two independently fillable regions. */
+.camp-in-map .staged-blueprint{grid-column:span 2;border:1.5px solid #9dae80;background:#f7f4e0}
+.pack-stages{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:8px;border:1px solid #c5cba9;border-radius:9px;overflow:hidden}
+.pack-stage{padding:8px 10px;background:#f2e4c6;min-width:0}
+.pack-stage.stage-2{background:#e2ead1;border-left:1px dashed #9fae82}
+.stage-heading{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:12px}
+.stage-heading>span{font-size:10px;color:#758365}
+.stage-progress{height:4px;border-radius:4px;background:#c8c3a344;margin-top:6px;overflow:hidden}
+.stage-progress>i{display:block;height:100%;background:#c49a57;transition:width .2s}
+.stage-2 .stage-progress>i{background:#81a269}
+.pack-stage small{display:block;font-size:9px;line-height:1.5;color:#7d8061;min-height:27px}
+.pack-stage.active{background:#d8e6c7}.pack-stage.active .stage-heading b,.pack-stage.active small{color:#3f704f}
+.pack-stage.waiting small{color:#9a743e;font-weight:700}
+.camp-in-map .pack-stages .requirements{margin:5px 0;min-height:14px}
+.camp-in-map .staged-blueprint .grid-board{max-width:560px;margin:12px auto 6px}
+.camp-in-map .staged-grid .zone-1{background:#f7ebd2;border-color:#b99b64}
+.camp-in-map .staged-grid .zone-2{background:#e9efd9;border-color:#8da36d}
+.camp-in-map .staged-grid .zone-active{border-color:#477955}
+.camp-in-map .staged-blueprint.complete{background:#e9f0da}
+.legacy-blueprint-note{font-size:9px;color:#8b815b;margin:5px 0}
+@media(max-width:760px){.camp-in-map .boards:has(.staged-blueprint){min-width:290px}.camp-in-map .staged-blueprint{grid-column:span 1}.pack-stage{padding:7px}.stage-heading{font-size:11px}.stage-heading>span{font-size:9px}.pack-stage small{font-size:8px}.camp-in-map .staged-grid{gap:2px}.camp-in-map .staged-grid .grid-cell{min-height:22px}.camp-in-map .staged-blueprint h4{font-size:12px}}

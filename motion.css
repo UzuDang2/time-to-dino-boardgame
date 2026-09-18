@@ -1,0 +1,13 @@
+/* Visual clones never become controls or participate in game layout. */
+.dino-motion-ghost,
+.dino-motion-ghost * {
+  pointer-events: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  caret-color: transparent !important;
+}
+.dino-motion-ghost {
+  isolation: isolate;
+  will-change: opacity, translate;
+}
+/* Resource transfer ghosts stay visible when the OS reduces decorative motion. */
