@@ -68,10 +68,7 @@
       const selectors=b.cells.flatMap((c,i)=>c?.id===loc.item.id?[`[data-cell="${attr(b.id)}:${i%b.w}:${Math.floor(i/b.w)}"]`]:[]);
       return footprint(root,selectors,rect(query(root,`[data-board="${attr(b.id)}"]`))||fallback);
     };
-    const plane=loc=>{
-      const z=engine.AIRCRAFT_ZONES.find(z=>z.id===loc.zone),b=after.aircraft.zones[loc.zone];
-      return footprint(root,b.cells.flatMap((c,i)=>c?.id===loc.item.id?[`[data-resource-drop="plane:${attr(z.id)}:${i%z.w}:${Math.floor(i/z.w)}"]`]:[]),fallback);
-    };
+    const plane=loc=>footprint(root,engine.aircraftCells().filter(c=>after.aircraft.zones[c.zone].cells[c.index]?.id===loc.item.id).map(c=>`[data-resource-drop="plane:grid:${c.x}:${c.y}"]`),fallback);
     const point=(g,loc)=>{
       if(!loc)return null;
       if(loc.area==='bag')return bag(loc.layer?loc.parent:loc.item,loc.owner);
@@ -207,7 +204,7 @@
           const to=resolve(root,shot.to)||shot.from.rect,from=shot.from.rect||to;
           const targets=shot.to.selectors.map(s=>query(root,s)).filter(Boolean);
           const actuals=targets.filter(n=>n.matches('.bag-piece,.table-token,.map-resource-token,.plane-cell,.grid-cell'));
-          if(shot.item.kind==='engine'&&shot.to.union&&shot.to.selectors.some(s=>s.includes('plane:engine:'))){const overlay=query(root,'.zone-engine .engine-footprint');if(overlay)actuals.push(overlay);}
+          if(shot.item.kind==='engine'&&shot.to.union&&shot.to.selectors.some(s=>s.includes('plane:grid:'))){const overlay=query(root,'.aircraft-connected-grid .engine-footprint');if(overlay)actuals.push(overlay);}
           if(!shot.stack)actuals.forEach(hide);
           const oldCells=[];
           for(const cell of shot.to.oldCells||[]){const clone=cell.clone;if(!clone)continue;clone.classList.add('transfer-cell-before');setFixed(clone,cell.rect,1201);document.body.append(clone);nodes.push(clone);oldCells.push(clone);}
