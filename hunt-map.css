@@ -1,0 +1,25 @@
+/* Persistent prey markers remain visible until a hunt is resolved or moves away. */
+.hex.has-hunt .tile-top{stroke:#ad694b;stroke-width:2}
+.hex .map-hunt-token rect{fill:#fff1cf;stroke:#a85e44;stroke-width:1.8;filter:drop-shadow(0 2px 0 #5c4f382b)}
+.hex .map-hunt-token text{font-size:10px;font-weight:800;fill:#81452f;letter-spacing:-.3px}
+.hunt-map-invite{background:#fff0d4f5;border-color:#ba8c58;color:#805537;box-shadow:0 4px 0 #ac7e5130}
+.hunt-map-invite:hover{background:#ffebc1;border-color:#966238}
+.hunt-map-invite small{color:#87744f}
+.location-hunt{padding:12px;margin:12px 0;border:1.5px solid #c49761;border-radius:13px;background:#fff0d4}
+.location-hunt-heading{display:flex;align-items:center;gap:10px}
+.location-hunt-heading>div{min-width:0}
+.location-hunt-heading>.animal-art{width:72px;height:55px;flex:none;background:transparent}
+.location-hunt-heading>.icon{flex:none}
+.location-hunt-heading small{display:block;color:#956849;font-size:10px;font-weight:700;line-height:1.5}
+.location-hunt-heading strong{display:block;color:#704931;font-size:17px;line-height:1.5}
+.location-hunt-heading span{display:block;color:#816b4c;font-size:11px;line-height:1.6}
+.location-hunt>p{font-size:11px;color:#816b4c;line-height:1.6;margin:9px 0}
+.location-hunt>.btn{min-height:42px;font-size:13px}
+@media(max-width:760px){.hunt-map-invite{gap:7px}.hunt-map-invite strong{font-size:12px}.hunt-map-invite small{font-size:9px}}
+
+/* Exhausted exploration hands stay readable but cannot be picked up. */
+.hand-zone .action-card{transition:opacity .2s ease,filter .2s ease,transform .15s ease}
+.hand-exhausted .action-card{opacity:.42;filter:saturate(.2);cursor:not-allowed;transform:none!important;user-select:none}
+.hand-exhausted .action-card:hover{box-shadow:0 5px 0 #a89f7f}
+.hand-exhausted .hand-header>strong{color:#7b826b}
+@media(prefers-reduced-motion:reduce){.hand-zone .action-card{transition:none}}
