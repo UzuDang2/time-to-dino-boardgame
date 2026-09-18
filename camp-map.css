@@ -111,3 +111,6 @@
 .camp-in-map .staged-blueprint.complete{background:#e9f0da}
 .legacy-blueprint-note{font-size:9px;color:#8b815b;margin:5px 0}
 @media(max-width:760px){.camp-in-map .boards:has(.staged-blueprint){min-width:290px}.camp-in-map .staged-blueprint{grid-column:span 1}.pack-stage{padding:7px}.stage-heading{font-size:11px}.stage-heading>span{font-size:9px}.pack-stage small{font-size:8px}.camp-in-map .staged-grid{gap:2px}.camp-in-map .staged-grid .grid-cell{min-height:22px}.camp-in-map .staged-blueprint h4{font-size:12px}}
+
+/* Construction pieces use a cell-anchored pointer drag, never a browser drag image. */
+.piece-preview[data-piece],.piece-preview[data-piece] svg,.grid-cell.movable-piece{touch-action:none;cursor:grab;user-select:none}.construction-dragging{opacity:.38}.construction-drag-ghost{filter:drop-shadow(0 4px 4px #334b3928)}.grid-cell.fixed-piece{cursor:default}.grid-cell.fixed-piece .joint{opacity:.75}.grid-cell.movable-piece:hover{outline:2px solid #a98546;outline-offset:1px}.piece-preview svg{overflow:visible}.piece-preview [data-piece-x]{pointer-events:all}.piece-preview [data-piece-x]:hover{stroke:#a87735;stroke-width:2}

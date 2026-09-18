@@ -41,6 +41,8 @@
       for(const item of p.bag)put(item,{area:'bag',owner:p.id});
       for(const b of [...p.storage,...p.boards])for(const item of b.cells.filter(Boolean))if(!map.has(item.id))put(item,{area:'board',owner:p.id,board:b.id});
     }
+    for(const item of g.campSupplies?.warehouse||[])put(item,{area:'camp',store:'warehouse'});
+    for(const p of g.players)for(const store of ['water','food'])for(const item of p.kitchenSupplies?.[store]||[])put(item,{area:'camp',store,owner:p.id});
     for(const item of g.loot)put(item,{area:'loot',owner:item.owner});
     for(const [tile,t] of Object.entries(g.tiles))for(const item of t.groundItems||[])put(item,{area:'ground',tile});
     for(const item of g.pending)put(item,{area:'pending',owner:E().active(g).id});
@@ -73,6 +75,7 @@
       if(!loc)return null;
       if(loc.area==='bag')return bag(loc.layer?loc.parent:loc.item,loc.owner);
       if(loc.area==='loot')return loc.item.source==='crafted'?endpoint(root,`.crafted-token[data-rsource="loot:${attr(loc.item.id)}"]`,rect(query(root,'.loot-tray'))||pouch(loc.item.kind).rect):pouch(loc.item.kind);
+      if(loc.area==='camp')return endpoint(root,`[data-rsource="camp:${attr(loc.store)}:${attr(loc.item.id)}"]`,rect(query(root,`[data-camp-grid="${attr(loc.store)}"]`))||fallback);
       if(loc.area==='ground')return ground(loc.tile,loc.item);
       if(loc.area==='pending')return pending(loc.item);
       if(loc.area==='board')return board(g,loc);
@@ -153,7 +156,7 @@
     for(const [id,dest] of next){
       if(handled.has(id)||dest.layer)continue;const src=old.get(id);
       if(src?.layer)continue;
-      const changed=src&&(src.area!==dest.area||src.owner!==dest.owner||src.tile!==dest.tile||src.board!==dest.board||src.zone!==dest.zone||src.item.x!==dest.item.x||src.item.y!==dest.item.y||src.item.rotation!==dest.item.rotation||src.item.flip!==dest.item.flip);
+      const changed=src&&(src.area!==dest.area||src.store!==dest.store||src.owner!==dest.owner||src.tile!==dest.tile||src.board!==dest.board||src.zone!==dest.zone||src.item.x!==dest.item.x||src.item.y!==dest.item.y||src.item.rotation!==dest.item.rotation||src.item.flip!==dest.item.flip);
       if(changed){
         if(src.area==='bag'&&dest.area==='loot')add(dest.item,bag(src.item,src.owner),endpoint(root,`[data-resource-drop="trade:${dest.owner}"]`,pouch(dest.item.kind).rect),{primary:true});
         else {const item=dest.area==='plane'?{...src.item,...dest.item,rotation:data.rotation??src.item.rotation??0,flip:data.flip??src.item.flip??false}:dest.item;add(item,point(before,src),point(after,dest),{primary:id===data.id||type==='place'&&id===(data.source==='pending'?before.pending[0]?.id:data.source)});}
