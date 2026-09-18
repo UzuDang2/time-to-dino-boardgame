@@ -265,3 +265,17 @@ html,body{height:100%;overflow:hidden}
 @media(max-width:1250px){.board-area:has(.shared-detection) .action-picker{top:calc(50% + 65px);max-height:calc(100% - 150px)}}
 @media(min-width:851px){.board-area:has(.shared-detection) .event-tabletop{top:75px}}
 @media(max-width:850px){.board-area:has(.shared-detection) .event-tabletop{top:148px}}
+
+/* Camp activities stay above secondary location details, with a reachable primary action. */
+.bottom-dock .location-card.camp-location{max-height:none;overflow:visible;border-color:#b4c89c;background:#f1f3df}
+.camp-activity-callout{margin-top:13px;padding-top:12px;border-top:1px solid #c6d4b2}
+.camp-activity-heading{display:flex;align-items:center;gap:7px;color:#416443;font-size:14px;line-height:1.35}
+.camp-activity-heading strong{font-weight:800}
+.bottom-dock .location-card .camp-activity-options{font-size:11px;line-height:1.6;color:#607550;margin:6px 0 11px}
+.bottom-dock .location-card .camp-entry-button{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:62px;padding:14px 16px;border-radius:12px;font-size:17px;font-weight:800;background:#416d50;border:1px solid #355c40;color:#fff9e7;box-shadow:0 4px 0 #294b35}
+.bottom-dock .location-card .camp-entry-button:hover:not(:disabled){background:#345d43;transform:translateY(-1px)}
+.bottom-dock .location-card .camp-entry-button:active:not(:disabled){transform:translateY(2px);box-shadow:0 2px 0 #294b35}
+.camp-entry-note{display:block;font-size:10px;line-height:1.5;color:#718165;margin:10px 0 3px}
+.camp-map-invite{position:absolute;z-index:2;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;width:min(470px,calc(100% - 32px));min-height:66px;padding:12px 16px;text-align:left;border:1px solid #8fa97c;border-radius:14px;background:#f6f3ddeb;box-shadow:0 4px 0 #78906633;color:#3f6747}
+.camp-map-invite>span{flex:1;min-width:0}.camp-map-invite strong{display:block;font-size:15px;line-height:1.4}.camp-map-invite small{display:block;font-size:11px;line-height:1.5;color:#77856a;margin-top:2px}.camp-map-invite>b{font-size:12px;white-space:nowrap}.camp-map-invite:hover{background:#e9efd5;border-color:#527b55}.camp-map-invite:focus-visible{outline:3px solid #d4a452;outline-offset:3px}
+@media(max-width:760px){.camp-map-invite{gap:8px;padding:10px 12px;min-height:60px}.camp-map-invite strong{font-size:13px}.camp-map-invite small{font-size:10px}.camp-map-invite>b{font-size:11px}.camp-map-invite>.icon{width:22px;height:22px}.bottom-dock .location-card .camp-entry-button{font-size:16px}}
