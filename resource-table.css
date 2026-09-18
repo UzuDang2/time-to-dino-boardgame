@@ -373,3 +373,6 @@
 @media(min-width:851px) and (max-height:870px){.table-center .board-area{height:225px;flex-basis:225px;min-height:225px}}
 .table-center .board-area{flex-shrink:1;min-height:220px}
 @media(min-width:851px) and (max-height:870px){.table-center .board-area{min-height:180px}}
+
+/* Completed combinations stay beside the bag until the player makes room. */
+.crafted-items:empty{display:none}.crafted-items{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.crafted-token{flex:1 1 80px;min-width:0;min-height:90px;background:#fff8df;border:2px solid #bd9454}.crafted-token>svg{width:64px;height:48px;max-width:100%}.crafted-token small{font-size:11px;color:#627a5b}

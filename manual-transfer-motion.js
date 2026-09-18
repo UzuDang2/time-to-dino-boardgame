@@ -75,7 +75,7 @@
     const point=(g,loc)=>{
       if(!loc)return null;
       if(loc.area==='bag')return bag(loc.layer?loc.parent:loc.item,loc.owner);
-      if(loc.area==='loot')return pouch(loc.item.kind);
+      if(loc.area==='loot')return loc.item.source==='crafted'?endpoint(root,`.crafted-token[data-rsource="loot:${attr(loc.item.id)}"]`,rect(query(root,'.loot-tray'))||pouch(loc.item.kind).rect):pouch(loc.item.kind);
       if(loc.area==='ground')return ground(loc.tile,loc.item);
       if(loc.area==='pending')return pending(loc.item);
       if(loc.area==='board')return board(g,loc);
@@ -147,7 +147,7 @@
     }else if(type==='splitFood'){
       const loc=byId(data.id),top=loc?.item.topping,dest=top&&next.get(top.id);if(dest){add(top,bag(loc.item,loc.owner),bag(dest.item,dest.owner),{primary:true});handled.add(data.id);}
     }else if(type==='eat'||type==='discardItem'){
-      const loc=byId(data.id);if(loc)add(loc.item,bag(loc.item,loc.owner),type==='eat'?endpoint(root,'[data-resource-drop="eat"]',fallback):pouch(loc.item.kind),{primary:true,consume:true});
+      const loc=byId(data.id);if(loc)add(loc.item,bag(loc.item,loc.owner),type==='eat'?endpoint(root,'[data-resource-drop="eat"]',fallback):point(after,next.get(data.id)),{primary:true,consume:type==='eat'});
     }else if(type==='discardPiece'){
       const loc=data.source==='pending'?byId(before.pending[0]?.id):byId(data.source);if(loc)add(loc.item,point(before,loc),piecePouch(loc.item),{primary:true,consume:true});
     }
@@ -160,7 +160,8 @@
       if(changed){
         if(src.area==='bag'&&dest.area==='loot')add(dest.item,bag(src.item,src.owner),endpoint(root,`[data-resource-drop="trade:${dest.owner}"]`,pouch(dest.item.kind).rect),{primary:true});
         else {const item=dest.area==='plane'?{...src.item,...dest.item,rotation:data.rotation??src.item.rotation??0,flip:data.flip??src.item.flip??false}:dest.item;add(item,point(before,src),point(after,dest),{primary:id===data.id||type==='place'&&id===(data.source==='pending'?before.pending[0]?.id:data.source)});}
-      }else if(!src&&dest.area==='pending')add(dest.item,piecePouch(dest.item),pending(dest.item));
+      }else if(!src&&dest.area==='loot'&&dest.item.source==='crafted')add(dest.item,endpoint(root,'.resource-pay-zone',fallback),point(after,dest));
+      else if(!src&&dest.area==='pending')add(dest.item,piecePouch(dest.item),pending(dest.item));
       else if(!src&&dest.area==='ground')add(dest.item,pouch(dest.item.kind),ground(dest.tile,dest.item));
     }
     // A rescue scatters raw resources without IDs; nested food becomes two tokens.

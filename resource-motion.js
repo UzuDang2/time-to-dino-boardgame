@@ -19,7 +19,7 @@
    (before.tileSetup?.remaining||[]).forEach((kind,i)=>shots.push({kind,from:pouch(kind),to:box(slots[i]),slot:i,mapIndex:before.tiles[before.tileSetup.tile].resources.length+i}));
   }else{
    const ids=new Set(owner.bag.map(i=>i.id)),added=after.players.find(p=>p.id===owner.id).bag.filter(i=>!ids.has(i.id));
-   for(const item of added){let from=pouch(item.kind),sourceIndex=-1;
+   for(const item of added){let from=before.loot.find(i=>i.id===item.id)?.source==='crafted'?box(root.querySelector(`.crafted-token[data-rsource="loot:${item.id}"]`))||pouch(item.kind):pouch(item.kind),sourceIndex=-1;
     if(type==='autoGather'){
      sourceIndex=sources.findIndex((el,i)=>!used.has(i)&&el.dataset.rsource?.startsWith('ground:')&&el.dataset.rsource.endsWith(':'+item.id));
      if(sourceIndex<0)sourceIndex=sources.findIndex((el,i)=>!used.has(i)&&el.dataset.rsource?.startsWith('tile:')&&before.tiles[owner.pos].resources[+el.dataset.rsource.slice(5)]===item.kind);
