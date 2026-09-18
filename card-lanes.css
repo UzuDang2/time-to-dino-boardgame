@@ -1,0 +1,16 @@
+.card-lanes{position:absolute;inset:0;pointer-events:none;z-index:3}
+.card-lane{position:absolute;top:44%;width:142px;min-height:126px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:12px 9px;border:2px dashed #8aa583;border-radius:15px;background:#f2f5dfe8;color:#3d634b;pointer-events:auto;box-shadow:0 3px 0 #53744c15;transition:background .18s,border-color .18s,box-shadow .18s}
+.card-lane.lane-use{left:16px}.card-lane.lane-discard{right:16px;border-color:#bf9c70;background:#fbefdce8;color:#87613d}
+.card-lane strong{font-size:17px}.card-lane span{font-size:11px;font-weight:700}.card-lane small{font-size:9px;color:#7e896b;line-height:1.5}.card-lane.lane-discard small{color:#958065}
+.card-lane:hover,.card-lane.selected,.card-lane.over{border-style:solid;box-shadow:0 0 0 3px #a6b79455;background:#e6f0ce}
+.card-lane.lane-discard:hover,.card-lane.lane-discard.selected,.card-lane.lane-discard.over{background:#f9dfb5;box-shadow:0 0 0 3px #c9a57544}
+.card-lane:focus-visible{outline:3px solid #d4a452;outline-offset:3px}
+.board-area.card-drag-over:after{display:none}.board-area.card-drag-over{box-shadow:none}
+.card-drag-over .card-lanes{z-index:5}
+.card-drag-over .card-lane{top:120px;bottom:90px;width:calc(50% - 26px);background:#e8f3d3de}
+.card-drag-over .card-lane.lane-discard{background:#fae5c7de}
+.card-intent-guide{position:absolute;z-index:4;bottom:32px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;max-width:calc(100% - 26px);padding:10px 14px;border:1px solid #c1c8ac;border-radius:12px;background:#fff9e9f5;box-shadow:0 3px 10px #34583920;font-size:12px;white-space:nowrap}
+.action-picker.intent-discard{border-color:#c19a68;background:#fff7e8}.intent-description{font-size:11px;line-height:1.6;color:#7c876e;margin:0 0 13px}.intent-discard .eyebrow{color:#986b40}.intent-discard .choice{background:#f4e9d6;border-color:#d0bc96}.intent-switch{margin-top:12px;text-align:center}
+@media(max-width:900px){.card-lane{width:112px;padding:10px 6px;min-height:110px;top:47%}.card-lane strong{font-size:15px}.card-lane small{font-size:8px}}
+@media(max-width:600px){.card-lane{top:auto;bottom:100px;min-height:72px;width:calc(50% - 24px);gap:3px;padding:8px}.card-lane>.icon{display:none}.card-lane.lane-use{left:16px}.card-lane.lane-discard{right:16px}.card-lane strong{font-size:14px}.card-lane small{display:none}.card-drag-over .card-lane{top:190px;bottom:90px;width:calc(50% - 24px)}.card-intent-guide{white-space:normal;width:calc(100% - 32px);bottom:20px;font-size:11px}}
+@media(prefers-reduced-motion:reduce){.card-lane{transition:none}}

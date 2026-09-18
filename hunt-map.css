@@ -23,3 +23,8 @@
 .hand-exhausted .action-card:hover{box-shadow:0 5px 0 #a89f7f}
 .hand-exhausted .hand-header>strong{color:#7b826b}
 @media(prefers-reduced-motion:reduce){.hand-zone .action-card{transition:none}}
+.terrain-decks{position:absolute;right:17px;top:83px;z-index:2;display:flex;gap:10px;pointer-events:none}
+.terrain-pile{width:57px;height:73px;border-radius:9px;border:3px double #acb68d;background:#536f58;color:#fff3ce;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:3px 3px 0 #b6c59e}
+.terrain-pile b{font-size:16px;line-height:1.1}.terrain-pile span{font-size:9px;margin-top:3px}.terrain-pile.discard-pile{background:#aa956e;border-color:#dacfa8;box-shadow:3px 3px 0 #c9b893}
+.hex.trampled-tile .tile-top{stroke:#995d43;stroke-dasharray:6 3}.hex .trampled-mark text{font-size:9px;font-weight:800;fill:#8f4631;paint-order:stroke;stroke:#fff0cb;stroke-width:3px}
+@media(max-width:850px){.terrain-decks{top:148px;right:12px;gap:7px}.terrain-pile{width:46px;height:62px}.terrain-pile span{font-size:8px}}
